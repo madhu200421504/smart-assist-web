@@ -1,0 +1,673 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Smart Assist</title>
+    <!-- Bootstrap 5 from jsdelivr CDN -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        /* Base styles */
+        body {
+            padding-top: 80px;
+            background-color: white;
+        }
+
+        /* Navigation styles */
+        .hover-dropdown:hover .dropdown-menu {
+            display: block;
+            margin-top: 0;
+        }
+
+        .hover-dropdown .dropdown-menu {
+            left: 0 !important;
+            right: auto;
+            transform: translateX(0);
+            border-radius: 10px;
+        }
+
+        .dropdown-item {
+            text-align: left;
+        }
+
+        /* Main container styles */
+        .boxes-container {
+            display: flex;
+            width: 100%;
+            justify-content: center;
+            align-items: center;
+            height: calc(100vh - 80px);
+        }
+
+        /* Square boxes styles */
+        .square {
+            position: relative;
+            width: 600px;
+            height: 450px;
+            background-color: #F3f9ff;
+            overflow: visible;
+            margin: 0 10px;
+        }
+
+        /* Phone mockup styles */
+        .phone-mockup {
+            position: relative;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%) scale(1.25);
+            height: auto;
+            width: 100%;
+            object-fit: contain;
+            z-index: 1;
+        }
+
+        .phone-mockup {
+            position: relative;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            max-width: 90%;
+            /* Adjust the max width */
+            max-height: 130%;
+            /* Adjust the max height */
+            object-fit: contain;
+            /* Ensure the image is contained within the box */
+            z-index: 1;
+            /* Ensure the image stays behind the text */
+        }
+
+        .phone-mockup-sec {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%) scale(1.1);
+            height: auto;
+            width: 100%;
+            max-width: 90%;
+            max-height: 90%;
+            object-fit: contain;
+            z-index: 1;
+        }
+
+        /* Label styles */
+        .label {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            z-index: 0;
+            /* Text stays behind the image */
+            text-align: center;
+            opacity: 0.9;
+            font-size: 70px;
+            font-weight: bold;
+            white-space: nowrap;
+            color: transparent;
+            background-image: linear-gradient(to right, lightblue 0%, #0096FF 100%);
+            -webkit-background-clip: text;
+            background-clip: text;
+        }
+
+        .smart,
+        .assist {
+            color: transparent;
+        }
+
+        /* Content row styles */
+        .content-row {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 20px;
+            padding: 20px;
+        }
+
+        .content-item {
+            margin-bottom: 20px;
+            width: 100%;
+            text-align: left;
+            padding-left: 70px;
+        }
+
+        .content-item strong {
+            font-size: 25px;
+            font-weight: 600;
+            color: #333333;
+        }
+
+        .content-item ul {
+            list-style-position: inside;
+            list-style-type: disc;
+            padding-left: 0;
+            margin: 0;
+            text-align: left;
+        }
+
+        .content-item li {
+            margin-bottom: 8px;
+            font-size: 1rem;
+            line-height: 1.5;
+        }
+
+        /* Feature box styles - IMPROVED */
+        .feature-container {
+            background-color: #f3f9ff;
+            padding: 40px 20px;
+            border-radius: 8px;
+            margin-top: 60px;
+            position: relative;
+        }
+
+        .features-heading {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+
+        .feature-box {
+            background-color: #ffffff;
+            padding: 15px;
+            margin: 10px 0;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+            height: 100%;
+        }
+
+        .feature-box strong {
+            color: #0C0C0D;
+            font-size: 1.1rem;
+            display: block;
+            margin-bottom: 5px;
+        }
+
+        .feature-box p {
+            font-weight: 300;
+            margin-bottom: 0;
+            font-size: 0.9rem;
+        }
+
+        .center-phone {
+            text-align: center;
+            margin: 30px 0;
+        }
+
+        .center-phone img {
+            max-width: 300px;
+            width: 80%;
+            height: auto;
+        }
+
+        /* Call logs section */
+        #cont2 {
+            text-align: left;
+            margin-left: 190px;
+            margin-top: 80px;
+        }
+
+        .content-container {
+            display: flex;
+            align-items: flex-start;
+            width: 100%;
+            margin: 0;
+            padding: 0;
+            position: relative;
+        }
+
+        .image-container {
+            flex: 1;
+            max-width: 50%;
+            padding-right: 0;
+            margin-right: 0;
+            position: relative;
+            z-index: 10;
+        }
+
+        .image-container img {
+            width: 900px;
+            max-width: 500px;
+            height: 500px;
+            margin-top: 20px;
+            border-radius: 8px;
+            box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        .box-container {
+            flex: 1;
+            max-width: 450px;
+            padding-left: 0;
+            margin-left: -160px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .box {
+            background-color: #f0f0f0;
+            padding: 30px;
+            height: 550px !important;
+            width: 700px !important;
+            box-sizing: border-box;
+            border-radius: 20px;
+        }
+
+        .text-with-border {
+            position: absolute;
+            top: 50px;
+            left: 450px;
+            padding: 20px;
+            text-align: center;
+            font-size: 20px;
+            font-weight: 400;
+            color: black;
+            border-top: 3px solid white;
+            background-color: white;
+            z-index: 20;
+            white-space: nowrap;
+            border-radius: 10px;
+            width: 492px;
+        }
+
+        .overlay-image {
+            position: absolute;
+            top: 120px;
+            left: 450px;
+            width: 550px !important;
+            height: 350px !important;
+            z-index: 20;
+            color: white;
+            padding: 22px;
+            background-color: white;
+        }
+
+        /* Animation styles */
+        .reveal-on-scroll {
+            opacity: 0;
+            transform: translateY(50px);
+            transition: all 0.6s ease-out;
+        }
+
+        .reveal-on-scroll.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        /* Media Queries - IMPROVED */
+        @media (max-width: 1200px) {
+            .center-phone img {
+                max-width: 250px;
+            }
+
+            #cont2 {
+                margin-left: 100px;
+            }
+
+            .text-with-border,
+            .overlay-image {
+                left: 350px;
+                width: 450px !important;
+            }
+        }
+
+        @media (max-width: 991px) {
+            .content-item {
+                padding-left: 30px;
+            }
+
+            #cont2 {
+                margin-left: 40px;
+            }
+
+            .content-container {
+                flex-direction: column;
+            }
+
+            .image-container {
+                max-width: 100%;
+            }
+
+            .box-container {
+                max-width: 100%;
+                margin-left: 0;
+                margin-top: 350px;
+            }
+
+            .box {
+                width: 100% !important;
+                height: auto !important;
+                min-height: 300px;
+            }
+
+            .text-with-border {
+                left: 20px;
+                width: 90% !important;
+                max-width: 450px;
+            }
+
+            .overlay-image {
+                left: 20px;
+                width: 90% !important;
+                max-width: 450px;
+            }
+        }
+
+        @media (max-width: 767px) {
+            .content-item {
+                padding-left: 15px;
+            }
+
+            .square {
+                width: 100%;
+                height: 350px;
+                margin: 0 0 20px 0;
+            }
+
+            .center-phone {
+                margin: 20px 0;
+            }
+
+            .center-phone img {
+                max-width: 200px;
+            }
+
+            .feature-box {
+                margin: 8px 0;
+            }
+
+            #cont2 {
+                margin-left: 20px;
+            }
+
+            .text-with-border {
+                font-size: 16px;
+                padding: 10px;
+            }
+
+            .overlay-image {
+                height: 280px !important;
+            }
+        }
+
+        @media (max-width: 575px) {
+            body {
+                padding-top: 70px;
+            }
+
+            .content-item {
+                padding-left: 10px;
+            }
+
+            .center-phone img {
+                max-width: 180px;
+            }
+
+            .feature-container {
+                padding: 30px 10px;
+            }
+
+            .feature-box {
+                padding: 12px;
+            }
+
+            .feature-box strong {
+                font-size: 1rem;
+            }
+
+            .feature-box p {
+                font-size: 0.8rem;
+            }
+
+            #cont2 {
+                margin-left: 10px;
+            }
+
+            .box-container {
+                margin-top: 300px;
+            }
+
+            .text-with-border {
+                width: 85% !important;
+                top: 30px;
+            }
+
+            .overlay-image {
+                height: 250px !important;
+                top: 90px;
+                width: 85% !important;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <nav class="navbar navbar-expand-lg navbar-light fixed-top">
+        <div class="container-fluid">
+            <!-- Logo -->
+            <a class="navbar-brand" href="index.html">
+                <img src="assests/logo.png" alt="logo" height="70" />
+            </a>
+
+            <!-- Navbar Toggle Button -->
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+                aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+
+            <!-- Navbar Links -->
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav m-auto">
+                    <div class="nav-group-rounded d-flex align-items-center border rounded-pill px-3 py-1 gap-3">
+                        <li class="nav-item">
+                            <a class="nav-link" href="index.html">Smart Assist</a>
+                        </li>
+                        <li class="nav-item dropdown hover-dropdown">
+                            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
+                                data-bs-toggle="dropdown" aria-expanded="false">
+                                Nexi
+                            </a>
+                            <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                                <li><a class="dropdown-item" href="#features-section">Powerful Features at your
+                                        Fingertips</a>
+                                </li>
+                                <li><a class="dropdown-item" href="#key-statistics">Key Statistics: Results From
+                                        Using Smart Assist</a></li>
+                            </ul>
+                        </li>
+                    </div>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container mt-5">
+        <div class="row">
+            <!-- First square with Smart Assist label and phone mockup -->
+            <div class="col-lg-6 col-md-6 col-12 mb-4">
+                <div class="square">
+                    <img src="assests/2.png" alt="Phone Mockup" class="phone-mockup">
+                    <div class="label">
+                        <span class="smart">Smart</span>
+                        <span class="assist">Assist</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Second square (empty or with content) -->
+            <div class="col-lg-6 col-md-6 col-12 mb-4">
+                <div class="square">
+                    <img src="assests/Group 289526 (1).png" alt="Another Mockup" class="phone-mockup-sec">
+                    <!-- Optional: add text label or other content -->
+                    <!-- <div class="label">Another Label</div> -->
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="container mt-5">
+        <div class="row">
+            <!-- First Content Item -->
+            <div class="col-lg-4 col-md-6 col-12 mb-4 text-center reveal-on-scroll">
+                <div class="content-item">
+                    <strong>What is Smart Assist?</strong>
+                    <ul>
+                        <li>Automates key business processes.</li>
+                        <li>Enhances productivity with smart suggestions.</li>
+                        <li>Improves decision-making with data-driven insights.</li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Second Content Item -->
+            <div class="col-lg-4 col-md-6 col-12 mb-4 text-center reveal-on-scroll">
+                <div class="content-item">
+                    <strong>How it is Different?</strong>
+                    <ul>
+                        <li>Uses advanced AI for automation.</li>
+                        <li>Integrates seamlessly with existing systems.</li>
+                        <li>Offers real-time data analysis and reporting.</li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Third Content Item -->
+            <div class="col-lg-4 col-md-6 col-12 mb-4 text-center reveal-on-scroll">
+                <div class="content-item">
+                    <strong>Why it was Made?</strong>
+                    <ul>
+                        <li>To streamline business operations.</li>
+                        <li>To reduce human error and manual work.</li>
+                        <li>To offer a scalable solution for growing businesses.</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- IMPROVED FEATURES SECTION -->
+    <div class="container reveal-on-scroll">
+        <h2 id="features-section" class="features-heading">Powerful Features at Your Fingertips</h2>
+
+        <div class="feature-container reveal-on-scroll">
+            <!-- Center Image (Phone Mockup) - Moved to top for mobile view -->
+            <div class="center-phone">
+                <img src="assests/Group 289527.png" alt="Phone Mockup">
+            </div>
+
+            <div class="row">
+                <!-- Left Column Features -->
+                <div class="col-lg-6 col-md-6 col-sm-12">
+                    <div class="row">
+                        <div class="col-md-12 col-sm-6">
+                            <div class="feature-box">
+                                <strong>Unified Lead Management</strong>
+                                <p>Reduces manual data entry</p>
+                            </div>
+                        </div>
+
+                        <div class="col-md-12 col-sm-6">
+                            <div class="feature-box">
+                                <strong>Auto-Assisted Follow-ups</strong>
+                                <p>Automated reminders for timely follow-ups</p>
+                            </div>
+                        </div>
+
+                        <div class="col-md-12 col-sm-6">
+                            <div class="feature-box">
+                                <strong>On-the-Go Test Drive Planner</strong>
+                                <p>Reduces manual data entry</p>
+                            </div>
+                        </div>
+
+                        <div class="col-md-12 col-sm-6">
+                            <div class="feature-box">
+                                <strong>Smart Data Insights</strong>
+                                <p>Content for feature 4</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Right Column Features -->
+                <div class="col-lg-6 col-md-6 col-sm-12">
+                    <div class="row">
+                        <div class="col-md-12 col-sm-6">
+                            <div class="feature-box">
+                                <strong>360° Customer View</strong>
+                                <p>All customer info in one place</p>
+                            </div>
+                        </div>
+
+                        <div class="col-md-12 col-sm-6">
+                            <div class="feature-box">
+                                <strong>Real-Time Alerts</strong>
+                                <p>Get notified instantly</p>
+                            </div>
+                        </div>
+
+                        <div class="col-md-12 col-sm-6">
+                            <div class="feature-box">
+                                <strong>Seamless Integrations</strong>
+                                <p>Connect to your tools easily</p>
+                            </div>
+                        </div>
+
+                        <div class="col-md-12 col-sm-6">
+                            <div class="feature-box">
+                                <strong>Performance Analytics</strong>
+                                <p>Track your team's progress</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="container reveal-on-scroll" id="cont2">
+        <h2>Call logs at Glance</h2>
+        <div class="content-container reveal-on-scroll">
+            <!-- Left side with image -->
+            <div class="image-container reveal-on-scroll">
+                <!-- Background main image -->
+                <img class="background-image reveal-on-scroll"
+                    src="assests/mockuuups-iphone-mockup-on-multicolored-background (2).jpeg" alt="Call Logs Image" />
+
+                <!-- Positioned text -->
+                <div id="key-statistics" class="text-with-border">Key Statistics: Results From Using Smart Assist</div>
+
+                <!-- Positioned image below text -->
+                <img class="overlay-image" src="assests/Frame 35507 2 (1).png" alt="Key Statistics Image" />
+            </div>
+
+            <!-- Right side with box -->
+            <div class="box-container reveal-on-scroll">
+                <div class="box">
+                    <!-- box content -->
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const observer = new IntersectionObserver(entries => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                    observer.unobserve(entry.target); // Trigger only once
+                }
+            });
+        });
+
+        document.querySelectorAll('.reveal-on-scroll').forEach(el => {
+            observer.observe(el);
+        });
+    </script>
+
+    <!-- Bootstrap 5 JS and Popper.js -->
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.10.2/dist/umd/popper.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.min.js"></script>
+</body>
+
+</html>

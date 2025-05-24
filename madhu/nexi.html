@@ -1,0 +1,1404 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Smart Assist</title>
+    <!-- Bootstrap 5 from jsdelivr CDN -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        .hover-dropdown:hover .dropdown-menu {
+            display: block;
+            margin-top: 0;
+        }
+
+        .hover-dropdown .dropdown-menu {
+            left: 0 !important;
+            right: auto;
+            transform: translateX(0);
+            border-radius: 10px;
+        }
+
+        .dropdown-item {
+            text-align: left;
+        }
+
+        body {
+            padding-top: 80px;
+            /* Space for navbar */
+            background-color: white;
+        }
+
+        .boxes-container {
+            display: flex;
+            width: 100%;
+            justify-content: center;
+            align-items: center;
+            height: calc(100vh - 80px);
+        }
+
+        .square {
+            position: relative;
+            width: 600px;
+            height: 450px;
+            background-color: #F3f9ff;
+            overflow: visible;
+            margin: 0 10px;
+        }
+
+        .phone-mockup {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            max-width: 90%;
+            /* Adjust the max width */
+            max-height: 90%;
+            /* Adjust the max height */
+            object-fit: contain;
+            /* Ensure the image is contained within the box */
+            z-index: 0;
+            /* Ensure the image stays behind the text */
+        }
+
+
+        /* Position the label text behind the phone image */
+        .label {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            z-index: 0;
+            /* Behind the image */
+            text-align: center;
+            opacity: 0.9;
+            font-size: 70px;
+            font-weight: bold;
+            white-space: nowrap;
+            color: transparent;
+            background-image: linear-gradient(to right, lightblue 0%, #0096FF 100%);
+            -webkit-background-clip: text;
+            background-clip: text;
+        }
+
+        .phone-mockup {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+
+            transform: translate(-50%, -50%) scale(1.25);
+            /* Increase scale for larger image */
+            height: auto;
+            width: 100%;
+            object-fit: contain;
+            z-index: 1;
+        }
+
+
+        .phone-mockup-sec {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%) scale(1.1);
+            /* Adjust scale as needed */
+            height: auto;
+            width: 100%;
+            max-width: 90%;
+            max-height: 90%;
+            object-fit: contain;
+            z-index: 1;
+
+        }
+
+
+        .smart {
+            color: transparent;
+            /* Ensuring the gradient is applied to the text */
+        }
+
+        .assist {
+            color: transparent;
+            /* Ensuring the gradient is applied to the text */
+        }
+
+        .content-row {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            /* Align items centrally */
+            gap: 20px;
+            /* Space between content items */
+            padding: 20px;
+        }
+
+        .content-item {
+            margin-bottom: 20px;
+            width: 100%;
+            /* Full width for mobile */
+        }
+
+        .content-item strong {
+            font-size: 25px;
+            font-weight: 600;
+            color: #333333;
+        }
+
+        .content-item ul {
+            list-style-type: none;
+            padding-left: 0;
+        }
+
+        .content-item ul li {
+            margin-bottom: 10px;
+            font-size: 1rem;
+        }
+
+        .content-item {
+            text-align: left;
+            padding-left: 70px;
+            /* ✅ center the heading */
+        }
+
+
+        /* show normal bullets */
+        .content-item ul {
+            list-style-position: inside;
+            /* ✅ Bullets appear inside the box, close to text */
+            list-style-type: disc;
+            /* ✅ Standard bullet */
+            padding-left: 0;
+            /* ✅ No extra left space */
+            margin: 0;
+            text-align: left;
+            /* ✅ Keep bullet + text aligned */
+        }
+
+        .content-item li {
+            margin-bottom: 8px;
+            font-size: 1rem;
+            line-height: 1.5;
+        }
+
+        @media (max-width: 767px) {
+            .content-item {
+                text-align: center;
+                width: 100%;
+                justify-content: center;
+                margin-left: 120px;
+                /* Ensures full width for each item on mobile */
+            }
+        }
+
+        .feature-box {
+            position: absolute;
+            background-color: #fff;
+            padding: 10px;
+            border-radius: 8px;
+            width: 250px;
+            text-align: center;
+        }
+
+        .connector-line {
+            position: absolute;
+            left: 290px;
+            width: 180px;
+            height: 2px;
+            background-color: #c0c0c0;
+            z-index: 1;
+        }
+
+        .connector-line {
+            position: absolute;
+            left: 300px;
+            /* Aligns with the boxes */
+            width: 50px;
+            height: 2px;
+            background-color: #1D5D9B;
+        }
+
+        @media screen and (max-width: 768px) {
+            .container>div {
+                flex-direction: column !important;
+                align-items: center !important;
+                padding: 10px !important;
+                height: auto !important;
+            }
+
+            .container>div>div:first-child {
+                position: static !important;
+                transform: none !important;
+                margin: 0 auto;
+            }
+
+            .container .connector-line {
+                display: none !important;
+                /* Hide on small screens */
+            }
+
+            .container img {
+                max-width: 200px !important;
+                margin-top: 20px;
+            }
+        }
+
+        @media screen and (max-width: 768px) {
+            .feature-box-container {
+                position: static !important;
+                transform: none !important;
+                margin: 0 auto !important;
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                justify-content: center;
+                margin-left: 50px !important;
+                width: 420px;
+            }
+        }
+
+        @media screen and (max-width: 768px) {
+            .square {
+                max-width: 130% !important;
+            }
+
+            .phone-mockup,
+            .phone-mockup-sec {
+                max-width: 100% !important;
+            }
+        }
+
+        /* General styles */
+        .right-side-container {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: flex-end;
+            position: absolute;
+            right: 20px;
+            top: 50%;
+            transform: translateY(-50%);
+        }
+
+        .card {
+            background-color: #ffffff;
+            padding: 10px;
+            margin-bottom: 20px;
+            border-radius: 8px;
+            width: 250px;
+            text-align: center;
+        }
+
+        /* Mobile adjustments */
+        @media screen and (max-width: 768px) {
+            .right-side-container {
+                position: relative;
+                /* Change to relative for better control on small screens */
+                top: auto;
+                /* Reset the top */
+                transform: none;
+                /* Reset transform */
+                margin-right: 10px;
+                /* Reduce margin for mobile */
+                align-items: center;
+                /* Center the items horizontally */
+            }
+
+            .card {
+                width: 100%;
+                /* Full width on mobile */
+                margin-right: 0;
+                /* Remove extra right margin */
+                padding: 15px;
+                /* Add more padding for mobile view */
+            }
+        }
+
+        #cont2 {
+            text-align: left;
+            /* Center-aligns the content */
+            margin-left: 190px;
+            margin-top: 80px;
+        }
+
+        .image-container img {
+            width: 900px;
+            /* Adjust the image size as needed */
+            max-width: 500px;
+            /* Max width for the image */
+            height: 500px;
+            /* Maintain aspect ratio */
+            margin-top: 20px;
+            /* margin-left: 30px; */
+            /* Space between the text and the image */
+            border-radius: 8px;
+            /* Optional: rounds the corners of the image */
+            box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+            /* Optional: shadow effect for the image */
+        }
+
+        .content-container {
+            display: flex;
+            align-items: flex-start;
+            width: 100%;
+            margin: 0;
+            padding: 0;
+            position: relative;
+        }
+
+        .image-container {
+            flex: 1;
+            max-width: 50%;
+            padding-right: 0;
+            margin-right: 0;
+            position: relative;
+            /* Allows z-index to work */
+            z-index: 10;
+            /* Makes the image appear on top */
+        }
+
+        .box-container {
+            flex: 1;
+            max-width: 450px;
+            padding-left: 0;
+            margin-left: -160px;
+            position: relative;
+            /* Allows z-index to work */
+            z-index: 1;
+            /* Makes the box appear behind the image */
+        }
+
+        .box {
+            background-color: #f0f0f0;
+            padding: 30px;
+            height: 550px !important;
+            width: 700px !important;
+            box-sizing: border-box;
+            border-radius: 20px;
+            width: 100%;
+        }
+
+        .text-with-border {
+            position: absolute;
+            top: 50px;
+            left: 450px;
+            padding: 20px;
+            text-align: center;
+            font-size: 20px;
+            font-weight: 400;
+            color: black;
+            border-top: 3px solid white;
+            background-color: white;
+            z-index: 20;
+            white-space: nowrap;
+            border-radius: 10px;
+            width: 492px;
+        }
+
+        .overlay-image {
+            position: absolute;
+            top: 120px;
+            /* Adjust based on spacing below the text */
+            left: 450px;
+            width: 550px !important;
+            height: 350px !important;
+            /* Adjust as needed */
+            z-index: 20;
+            color: white;
+            padding: 22px;
+            background-color: white;
+        }
+
+        /* for anime */
+        .reveal-on-scroll {
+            opacity: 0;
+            transform: translateY(50px);
+            transition: all 0.6s ease-out;
+        }
+
+        .reveal-on-scroll.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        @media (max-width: 768px) {
+            .align-text {
+                display: block;
+                font-weight: bold;
+                background: linear-gradient(to right, lightblue 0%, #0096FF 100%);
+                -webkit-background-clip: text;
+                background-clip: text;
+                color: transparent;
+                text-align: center;
+                white-space: nowrap;
+                margin-left: -10px !important;
+                margin-left: 30px;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .align-text1 {
+                margin-left: 32px;
+            }
+        }
+
+        /* Base paragraph styling */
+        p.description {
+            max-width: 800px;
+            margin: 20px 0 0 0;
+            /* Added top margin and removed auto horizontal margins */
+            padding: 10px 0;
+            /* Removed horizontal padding */
+            font-size: 1rem;
+            line-height: 1.6;
+            text-align: left;
+            /* Changed to left alignment */
+            color: #333;
+        }
+
+        /* Mobile optimization */
+        @media (max-width: 768px) {
+            p.description {
+                margin: 15px 0 0 0;
+                padding: 10px 15px;
+                font-size: 0.95rem;
+                text-align: left;
+            }
+        }
+
+        /* Custom heading container */
+        .heading-container {
+            margin-bottom: 0;
+            /* Reduce space between heading and paragraph */
+        }
+
+
+        .description {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 10px 20px;
+            font-size: 1rem;
+            line-height: 1.6;
+            text-align: justify;
+            color: #333;
+        }
+
+        /* Mobile optimization */
+        @media (max-width: 768px) {
+            .description {
+                margin: 0;
+                /* Remove auto margin to align left */
+                padding: 10px 15px;
+                font-size: 0.95rem;
+                text-align: left;
+                /* Ensure left alignment on mobile */
+            }
+        }
+
+
+        .img-fluid {
+            display: block;
+            width: 100%;
+            /* Ensure image doesn't exceed container width */
+            max-width: 100%;
+            /* Max width 100% to prevent overflow */
+            height: auto;
+            margin: 0 auto;
+            /* Centers image horizontally */
+            padding: 30px;
+            /* Optional padding */
+            object-fit: contain;
+            /* Keeps the aspect ratio */
+            margin-left: 20px;
+            ;
+
+            /* Remove negative margin */
+        }
+
+
+        .heading {
+            font-weight: 300;
+            color: black;
+            margin-left: 200px;
+            /* Default margin */
+        }
+
+        /* Media query for smaller screens (phones) */
+        @media (max-width: 768px) {
+            .heading {
+                margin-left: 30px;
+                /* Removes the left margin on phone screens */
+            }
+        }
+
+
+        @media (max-width: 768px) {
+            .img-fluid {
+                margin-left: 10px;
+                /* Removes the left margin on phone screens */
+            }
+        }
+
+
+
+
+
+
+
+        .img-responsive {
+            margin-left: 210px;
+            border-radius: 20px;
+            height: 600px;
+        }
+
+
+
+
+
+        .image-container {
+            position: relative;
+            width: fit-content;
+            margin-top: 50px;
+            /* or set to 100% / specific px */
+        }
+
+        .img-responsive {
+            max-width: 100%;
+            height: auto;
+            display: block;
+        }
+
+
+
+        @media (max-width: 768px) {
+            .img-responsive {
+                margin-left: 10px;
+                width: 390px !important;
+                height: 100px;
+                /* Removes the left margin on phone screens */
+            }
+        }
+
+
+
+
+        .overlay-box {
+            position: absolute;
+            background-color: rgba(25, 42, 86, 0.9);
+            /* dark blue with opacity */
+            color: white;
+            padding: 12px 20px;
+            border-radius: 8px;
+            width: 200px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+        }
+
+        /* Position boxes - one on top of the other */
+        .box1 {
+            top: 20px;
+            left: 600px;
+            border-radius: 10px;
+            height: 200px;
+            /* Increase height here */
+            padding: 20px;
+            /* Add padding for inner spacing */
+            background-color: #f5f5f5;
+            /* light grey */
+            /* Dark blue */
+            color: white;
+            width: 200px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+            display: flex;
+            align-items: center;
+            /* Vertically center content */
+            justify-content: center;
+            /* Horizontally center content */
+        }
+
+        .box2 {
+            top: 220px;
+            left: 600px;
+            height: 200px;
+            width: 200px;
+            border-radius: 10px;
+            background-color: #f3e8ff;
+            align-items: center;
+            justify-content: center;
+            /* light purple */
+            position: absolute;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+            display: flex;
+
+
+        }
+
+
+
+
+        .love {
+            margin-left: -200px;
+            margin-left: 20px;
+            color: #0a192f;
+
+
+        }
+
+        @media (max-width: 768px) {
+            .love {
+                margin-left: 30px;
+                /* Removes the left margin on phone screens */
+            }
+        }
+
+        .chal {
+            color: #0a192f;
+            margin-left: -200px;
+            margin-left: 20px;
+            /* margin-top: 850px; */
+            /* font-weight: 900px; */
+        }
+
+        @media (max-width: 768px) {
+            .chal {
+                margin-left: 30px;
+                margin-top: 850px;
+
+                /* Removes the left margin on phone screens */
+            }
+        }
+
+
+
+        .image-container {
+            position: relative;
+        }
+
+        .overlay-box {
+            position: absolute;
+            padding: 10px;
+            border-radius: 10px;
+            /* light purple */
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+        }
+
+        .box1 {
+            top: 100px;
+            left: 400px;
+            height: 200px;
+            width: 200px;
+
+        }
+
+        .box2 {
+            top: 290px;
+            left: 400px;
+            height: 200px;
+            width: 200px;
+        }
+
+        .box3 {
+            top: -20px;
+            left: 650px;
+            /* Position this box next to box1 */
+            height: 200px;
+            width: 200px;
+
+        }
+
+        .box4 {
+            top: 220px;
+            left: 650px;
+            /* Position this box next to box2 */
+            height: 200px;
+            width: 220px;
+        }
+
+
+
+        .chal2 {
+            text-align: right;
+            margin-right: 80px;
+            /* adjust as needed */
+            color: #192A56;
+            font-weight: 700;
+        }
+
+
+
+        @media (max-width: 768px) {
+            .chal2 {
+                margin-left: 30px;
+                margin-top: 65px;
+                white-space: nowrap;
+                /* Removes the left margin on phone screens */
+            }
+        }
+
+
+        .image-container2.right-side {
+            display: flex;
+            justify-content: flex-end;
+            /* Aligns content to the right */
+            padding-right: 50px;
+            margin-right: -30px;
+            margin-top: 30px;
+            position: relative;
+            /* Optional: adds spacing from the right edge */
+        }
+
+        .img-responsive2 {
+            max-width: 100%;
+            height: auto;
+            width: 500px;
+
+            /* or any width you prefer */
+            border-radius: 10px;
+            /* optional styling */
+        }
+
+        @media (max-width: 768px) {
+            .img-responsive {
+                margin-left: 10px;
+                width: 390px !important;
+                height: 100px;
+                /* Removes the left margin on phone screens */
+            }
+        }
+
+        @media (max-width: 768px) {
+            .img-responsive2 {
+                margin-right: -120px;
+                width: -500px !important;
+                height: 200px;
+                /* Removes the left margin on phone screens */
+            }
+        }
+
+
+
+        /* Position boxes on the left side of the image */
+        .overlay-box2 {
+            position: absolute;
+            background-color: #f3e8ff;
+            padding: 10px 15px;
+            border-radius: 10px;
+            color: black;
+            font-size: 16px;
+            width: 180px;
+            text-align: center;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            display: flex;
+            /* REQUIRED */
+        }
+
+
+
+        /* Box positions on top-left of image */
+        .box-left-1 {
+            top: 142px;
+            left: 900px;
+            width: 200px;
+            height: 200px;
+            text-align: center;
+            background-color: #f5f5f5;
+
+
+
+        }
+
+        .box-left-2 {
+            top: 370px;
+            left: 900px;
+            width: 200px;
+            height: 200px;
+        }
+
+
+        .box-left-3 {
+            top: 10px;
+            left: 650px;
+            width: 200px;
+            height: 190px;
+            /* adjust further left */
+            background-color: #f3e8ff;
+
+        }
+
+        .box-left-4 {
+            top: 235px;
+            left: 650px;
+            width: 200px;
+            height: 190px;
+            /* adjust further left */
+            background-color: #f5f5f5;
+
+        }
+
+
+
+
+        @media (max-width: 768px) {
+
+            /* Stack boxes vertically */
+            .box1,
+            .box2,
+            .box3,
+            .box4 {
+                width: 90%;
+                height: auto;
+                font-size: 18px;
+                /* Smaller font size */
+                margin: 10px auto;
+                /* Center the boxes and add spacing between them */
+                position: relative;
+                /* Adjust position for better stacking */
+            }
+
+            /* Adjust positioning for phone screens */
+            .box1 {
+                top: 10px;
+                left: 110px;
+                background-color: #f5f5f5;
+            }
+
+            .box2 {
+                top: 20px;
+                left: 110px;
+                background-color: #f5f5f5;
+            }
+
+            .box3 {
+                top: 30px;
+                left: 110px;
+                background-color: #f5f5f5;
+            }
+
+            .box4 {
+                top: 40px;
+                left: 110px;
+                background-color: #f3e8ff;
+            }
+        }
+
+
+
+
+        @media (max-width: 768px) {
+
+            /* Stack boxes vertically */
+            .box-left-1,
+            .box-left-2,
+            .box-left-3,
+            .box-left-4 {
+                width: 90%;
+                height: auto;
+                font-size: 18px;
+                /* Smaller font size */
+                margin: 10px auto;
+                /* Center the boxes and add spacing between them */
+                position: relative;
+                /* Adjust position for better stacking */
+            }
+
+            /* Adjust positioning for phone screens */
+            .box-left-1 {
+                top: 400px;
+                left: 320px;
+                background-color: #f5f5f5;
+            }
+
+            .box-left-2 {
+                top: 200px;
+                left: 180px;
+                background-color: #f5f5f5;
+            }
+
+            .box-left-3 {
+                top: 630px;
+                left: 50px;
+                background-color: #f5f5f5;
+            }
+
+            .box-left-4 {
+                top: 850px;
+                left: -80px;
+                background-color: #f3e8ff;
+            }
+        }
+
+
+
+
+
+
+
+        .feature-section {
+            padding: 20px 0;
+            /* Padding on top and bottom */
+            background-color: #f5f5f5;
+            height: 600px;
+            margin-left: 20px;
+            /* Move it slightly inward from the left */
+            margin-right: 20px;
+            /* Move it slightly inward from the right */
+        }
+
+        .feature-container {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 20px;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 15px;
+        }
+
+        .feature-box {
+            background-color: #f5f5f5;
+            border-radius: 8px;
+            padding: 20px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            text-align: center;
+            font-weight: bold;
+        }
+
+
+        .border-design {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            width: 100%;
+            height: 40px;
+            margin-left: 50px;
+        }
+
+        .border-img {
+            height: 100%;
+            width: 50%;
+            /* or whatever ratio you want */
+            background-repeat: no-repeat;
+            background-size: cover;
+            background-position: center;
+        }
+
+        .border-img-left {
+            background-image: url('assests-nexi/border.png');
+            margin-left: 110px;
+        }
+
+        .border-img-right {
+            background-image: url('assests-nexi/borderr.png');
+            margin-left: 750px;
+        }
+
+
+
+
+        .img-responsive {
+            margin-left: -60px;
+            margin-left: 20px;
+        }
+
+        .border-design-bottom {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            width: 100%;
+            height: 40px;
+            margin-left: 200px;
+            margin-top: 280px;
+
+        }
+
+        .border-img2 {
+            height: 100%;
+            width: 50%;
+            background-repeat: no-repeat;
+            background-size: contain;
+            background-position: center;
+            margin-left: -1350px;
+            margin-top: -20px;
+
+        }
+
+        .border-img-left2 {
+            background-image: url('assests-nexi/border8.png');
+            /* left-side image */
+        }
+
+        .border-img-right2 {
+            background-image: url('assests-nexi/border88.png');
+            margin-left: -750px;
+        }
+
+
+
+        /* last */
+        .feature-section {
+            width: 100%;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .feature-container {
+            position: relative;
+            width: 100%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        .feature-box {
+            background-color: #fff;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+        }
+
+        /* Border design elements */
+        .border-design,
+        .border-design-bottom {
+            position: relative;
+            width: 100%;
+        }
+
+        .border-img,
+        .border-img2 {
+            position: absolute;
+        }
+
+        /* Desktop styling (default) */
+        @media screen and (min-width: 1025px) {
+            .feature-box {
+                position: absolute;
+            }
+
+            /* Keep your original positioning for desktop */
+        }
+
+        /* Tablet styling */
+        @media screen and (min-width: 768px) and (max-width: 1024px) {
+            .feature-container {
+                display: flex;
+                flex-wrap: wrap;
+                justify-content: space-between;
+                padding: 40px 20px;
+                min-height: 800px;
+                /* Increased container height */
+            }
+
+            .feature-box {
+                position: relative !important;
+                margin: 20px !important;
+                width: calc(50% - 40px) !important;
+                height: auto !important;
+                min-height: 180px;
+            }
+
+            .border-design,
+            .border-design-bottom {
+                display: none;
+            }
+        }
+
+        /* Phone styling */
+        @media screen and (max-width: 767px) {
+            .feature-section {
+                min-height: 140vh;
+                /* Ensure section takes at least full viewport height */
+            }
+
+            .feature-container {
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                padding: 30px 15px;
+                min-height: 1500px;
+                /* Increased container height */
+            }
+
+            .feature-box {
+                position: relative !important;
+                margin: 15px 0 !important;
+                width: 100% !important;
+                max-width: 320px !important;
+                height: auto !important;
+                min-height: 180px;
+                /* Slightly reduced min-height */
+                padding: 15px !important;
+                /* Slightly reduced padding */
+                display: flex !important;
+                flex-direction: column !important;
+                justify-content: center !important;
+            }
+
+            .feature-box h3 {
+                font-size: 18px !important;
+                /* Slightly smaller font */
+                white-space: normal !important;
+                text-align: center !important;
+                margin-bottom: 8px !important;
+                /* Reduced margin */
+            }
+
+            .feature-box p {
+                text-align: center !important;
+                font-size: 14px !important;
+                margin: 0 !important;
+            }
+
+            .border-design,
+            .border-design-bottom {
+                display: none;
+            }
+        }
+
+
+
+        #box11 {
+            width: 320px !important;
+            height: 260px;
+        }
+
+        #daba22 {
+            width: 320px !important;
+            height: 260px;
+            margin-left: 600px !important;
+        }
+
+        @media screen and (max-width: 768px) {
+            #daba22 {
+                margin-left: -200px !important;
+                margin-left: 20px !important;
+
+            }
+        }
+
+
+
+        #box4 {
+            width: 320px !important;
+            height: 260px;
+        }
+
+        /* This will ensure the dropdown is hidden by default */
+        .dropdown-menu {
+            display: none;
+        }
+
+        /* Show the dropdown when the 'show' class is added */
+        .dropdown-menu.show {
+            display: block;
+        }
+    </style>
+
+</head>
+
+<body>
+    <nav class="navbar navbar-expand-lg navbar-light fixed-top">
+        <div class="container-fluid">
+            <!-- Logo -->
+            <a class="navbar-brand" href="index.html">
+                <img src="assests/logo.png" alt="logo" height="70" />
+            </a>
+
+            <!-- Navbar Toggle Button -->
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+                aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+
+            <!-- Navbar Links -->
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav m-auto">
+                    <div class="nav-group-rounded d-flex align-items-center border rounded-pill px-3 py-1 gap-3">
+                        <li class="nav-item dropdown hover-dropdown">
+                            <div class="d-flex align-items-center">
+                                <!-- Smart-assist label -->
+                                <a class="nav-link pe-1" href="index.html" id="smartAssistLink">
+                                    Smart-assist
+                                </a>
+
+                                <!-- ▼ Dropdown arrow -->
+                                <a class="nav-link dropdown-toggle px-1" href="#" id="smartAssistDropdown" role="button"
+                                    data-bs-toggle="dropdown" aria-expanded="false">
+                                </a>
+                            </div>
+
+                            <!-- Dropdown items -->
+                            <ul class="dropdown-menu" aria-labelledby="smartAssistDropdown">
+                                <li>
+                                    <a class="dropdown-item" href="#features-section">
+                                        Powerful Features at your Fingertips
+                                    </a>
+                                </li>
+                                <li>
+                                    <a class="dropdown-item" href="#key-statistics">
+                                        Key Statistics: Results From Using Smart Assist
+                                    </a>
+                                </li>
+                            </ul>
+                        </li>
+
+
+
+                        <li class="nav-item dropdown hover-dropdown">
+                            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
+                                data-bs-toggle="dropdown" aria-expanded="false">
+                                Nexi
+                            </a>
+                            <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                                <li><a class="dropdown-item" href="nexi.html">About Nexi</a>
+                                </li>
+                                <li><a class="dropdown-item" href="#chal">Challenges</a></li>
+                                <li><a class="dropdown-item" href="#impact">Impact</a></li>
+                                <li><a class="dropdown-item" href="#ai">AI Technologies Behind NEXI</a></li>
+
+                            </ul>
+                        </li>
+                    </div>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container text-left my-4">
+        <div class="heading-container">
+            <h1 class="display-4">
+                <span class="align-text1" style="color:#CAA4FF;">Call me Nexi!</span>
+                <span style="color:black;font-weight:400;">The</span> <br>
+                <span class="align-text" style="color:black;font-weight:400;">Smartest Sales Agent</span>
+            </h1>
+        </div>
+
+        <p class="description">
+            Nexi offers powerful tools designed to optimize sales workflows. With smart automated follow-ups, AI-powered
+            calling, and intelligent objection handling, NEXI enhances lead engagement and conversion. Additionally, it
+            gathers
+            critical sales insights to help teams make data-driven decisions and improve overall performance.
+        </p>
+    </div>
+
+
+
+    <div>
+        <img src="assests-nexi/Group 289664.png" alt="Nexi AI Assistant" class="img-fluid">
+    </div>
+
+
+
+
+    <h2 class="love">Here's Why You'll Love Nexi</h2>
+    <h2 class="chal" id="chal">Challenges</h2>
+    <div class="image-container">
+        <img src="assests-nexi/big img.png" alt="Nexi Challenges Image" class="img-responsive">
+
+        <div class="overlay-box box1" style="color:black;font-size:25px;           background-color: #f5f5f5; /* light grey */
+;;">Delayed
+            Customer Responses</div>
+        <div class="overlay-box box2" style="color:black;font-size:25px;margin-top:30px;">Inefficient handling of fresh
+            leads</div>
+
+        <div class="overlay-box box3" style="color:black;font-size:25px;background-color: #f3e8ff; /* light grey */
+">Lead Abandoment</div>
+        <div class="overlay-box box4" style="color:black;font-size:25px;              background-color: #f5f5f5; 
+">Missed deals</div>
+    </div>
+
+    <!-- right side -->
+    <!-- <h2 class="love2">Here's Why You'll Love Nexi</h2> -->
+    <h2 class="chal2" id="impact">NEXI's Impact</h2>
+    <div class="image-container2 right-side">
+        <img src="assests-nexi/Free Holding Samsung S20 mockup in front of a bike (Mockuuups Studio) (1).png"
+            alt="Nexi Challenges Image" class="img-responsive2">
+
+        <div class="overlay-box2 box-left-1" style="color:black;font-size:25px;">Smart-Automated Follow-ups</div>
+        <div class="overlay-box2 box-left-2" style="color:black;font-size:25px;">Smart Sales Insights</div>
+
+        <div class="overlay-box2 box-left-3" style="color:black;font-size:25px;">Increased Lead Conversion</div>
+        <div class="overlay-box2 box-left-4" style="color:black;font-size:25px;">Faster Deal Closures</div>
+    </div> -
+    <!-- <div class="overlay-box box1" style="color:black;font-size:25px;           background-color: #f5f5f5; /* light grey */
+;;">Delayed
+        Customer Responses</div>
+    <div class="overlay-box box2" style="color:black;font-size:25px;margin-top:30px;">Inefficient handling of fresh
+        leads</div>
+    <div class="overlay-box box3" style="color:black;font-size:25px;  background-color: #f5f5f5; /* light grey */
+">Lead Abandoment</div>
+    <div class="overlay-box box4" style="color:black;font-size:25px;            background-color: #f3e8ff;
+">Missed deals</div>
+    </div> -->
+
+    <h2 class="chal" id="ai">AI Technologies Behind NEXI</h2>
+    <div class="feature-section">
+        <div class="feature-container">
+            <div class="border-design">
+                <div class="border-img border-img-left"></div>
+                <div class="border-img border-img-right"></div>
+            </div>
+
+            <div class="feature-box" id="box11"
+                style="height:190px; width:260px; padding: 15px;text-align: left;margin-top:80px;margin-left:220px;padding:20px;">
+                <h3 style="margin: 0 0 10px; font-size: 25px;">Natural Language Processing (NLP)</h3>
+                <p style="margin: 0; font-size: 16px;font-weight:200">Responds to human <br>conversations naturally</p>
+            </div>
+
+            <div class="feature-box" id="daba22"
+                style="margin-left:560px;height:190px; width:270px;font-size: 25px;text-align: left;margin-top:80px;padding:20px;">
+                <h3 style="margin: 0 0 10px; font-size: 25px;white-space: nowrap;">Speech-To-Text(STT)</h3>
+                <p style="margin: 0; font-size: 16px;font-weight:200">Converts spoken words into for processing and
+                    analysis.</p>
+
+            </div>
+            <div class="border-design-bottom">
+                <div class="border-img2 border-img-left2"></div>
+                <div class="border-img2 border-img-right2"></div>
+            </div>
+
+            <div class="feature-box" id="box3" style="margin-left:610px;margin-top:350px;height:190px;width:320px;">
+                <h3 style="margin: 0 0 10px; font-size: 25px;white-space: nowrap;text-align: left;">Advanced Machine<br>
+                    Learning</h3>
+                <p style="margin: 0; font-size: 16px;font-weight:200;text-align:left">Continuously learns from every
+                    conversation to improve accuracy decision making overtime</p>
+            </div>
+            <div class="feature-box" id="box4"
+                style="margin-left:-5px;margin-top:350px;height:190px;margin-left:220px;width:275px">
+                <h3 style="margin: 0 0 10px; font-size: 25px;white-space: nowrap;">Text-To-Speech(TSS)</h3>
+                <p style="margin: 0; font-size: 16px;font-weight:200;text-align:left">Converts written text into spoken
+                    words</p>
+            </div>
+        </div>
+    </div>
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const dropdownToggle = document.getElementById('navbarDropdown');
+            const dropdownMenu = document.querySelector('.dropdown-menu');
+
+            dropdownToggle.addEventListener('click', function (event) {
+                event.preventDefault(); // Prevent default anchor behavior
+                dropdownMenu.classList.toggle('show'); // Toggle the 'show' class to display or hide the dropdown
+            });
+
+            // Optionally close the dropdown if you click outside of it
+            document.addEventListener('click', function (event) {
+                if (!dropdownToggle.contains(event.target) && !dropdownMenu.contains(event.target)) {
+                    dropdownMenu.classList.remove('show');
+                }
+            });
+        });
+
+    </script>
+    <!-- Bootstrap 5 JS and Popper.js -->
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.10.2/dist/umd/popper.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.min.js"></script>
+</body>
+
+</html>
