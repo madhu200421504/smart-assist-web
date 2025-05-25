@@ -7,880 +7,9 @@
     <title>Smart Assist</title>
     <!-- Bootstrap 5 from jsdelivr CDN -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
-    <style>
-        /* Base styles */
-        body {
-            padding-top: 80px;
-            background-color: white;
-            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen, Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
-        }
+    <link rel="stylesheet" href="style.css">
 
-        /* Navbar hover dropdown */
-        .hover-dropdown:hover .dropdown-menu {
-            display: block;
-            margin-top: 0;
-        }
 
-        .hover-dropdown .dropdown-menu {
-            left: 0 !important;
-            right: auto;
-            transform: translateX(0);
-            border-radius: 10px;
-        }
-
-        .dropdown-item {
-            text-align: left;
-        }
-
-        /* Hero section with phone mockups */
-        .boxes-container {
-            display: flex;
-            width: 100%;
-            justify-content: center;
-            align-items: center;
-            height: calc(100vh - 80px);
-        }
-
-        .square {
-            position: relative;
-            width: 600px;
-            height: 450px;
-            background-color: #F3f9ff;
-            overflow: visible;
-            margin: 0 10px;
-            border-radius: 12px;
-        }
-
-        .square2 {
-            position: relative;
-            width: 600px;
-            height: 450px;
-            background-color: #F3f9ff;
-            overflow: visible;
-            margin: 0 10px;
-            border-radius: 12px;
-
-        }
-
-        .phone-mockup {
-            position: absolute;
-            top: 45%;
-            /* was 55% — smaller value pushes it up */
-            left: 50%;
-            transform: translate(-50%, -50%) scale(1.25);
-            max-width: 90%;
-            max-height: 100%;
-            object-fit: contain;
-            z-index: 1;
-        }
-
-        .phone-mockup-sec {
-            position: absolute;
-            top: 38%;
-            /* was 55% — smaller value pushes it up */
-            left: 50%;
-            transform: translate(-50%, -50%) scale(1.25);
-            max-width: 90%;
-            max-height: 100%;
-            object-fit: contain;
-            z-index: 1;
-            margin-top: 30px;
-            margin-left: -95px;
-        }
-
-        @media screen and (max-width: 767px) {
-
-            .phone-mockup-sec {
-                margin-left: 30px;
-            }
-
-            .square2 {
-                width: 380px;
-            }
-        }
-
-
-        .phone-mockup-sec {
-            transform: translate(-50%, -50%) scale(1.1);
-        }
-
-        .label {
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            z-index: 0;
-            text-align: center;
-            opacity: 0.9;
-            font-size: 70px;
-            font-weight: bold;
-            white-space: nowrap;
-            color: transparent;
-            background-image: linear-gradient(to right, lightblue 0%, #0096FF 100%);
-            -webkit-background-clip: text;
-            background-clip: text;
-        }
-
-        .smart,
-        .assist {
-            color: transparent;
-        }
-
-        /* Content items section */
-        .content-item {
-            margin-bottom: 20px;
-            width: 100%;
-            text-align: left;
-            padding-left: 20px;
-        }
-
-        .content-item strong {
-            font-size: 25px;
-            font-weight: 600;
-            color: #333333;
-            display: block;
-            margin-bottom: 15px;
-        }
-
-        .center-phone {
-            margin-top: -600px;
-            margin-bottom: -600px;
-            position: relative;
-            z-index: 1;
-        }
-
-        /* Add this to the parent container */
-        .phone-container {
-            overflow: visible;
-            position: relative;
-        }
-
-        .content-item ul {
-            list-style-position: inside;
-            list-style-type: disc;
-            padding-left: 0;
-            margin: 0;
-            text-align: left;
-        }
-
-        .content-item li {
-            margin-bottom: 8px;
-            font-size: 1rem;
-            line-height: 1.5;
-        }
-
-        /* Features section */
-        .feature-box-container {
-            background-color: #f3f9ff;
-            padding: 40px;
-            border-radius: 8px;
-            margin-top: 50px;
-            height: 120px;
-            ;
-            min-height: 520px;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            position: relative;
-            overflow: visible;
-        }
-
-        .feature-box {
-            background-color: #fff;
-            padding: 15px;
-            margin-bottom: 20px;
-            border-radius: 8px;
-            width: 250px;
-            text-align: center;
-        }
-
-
-
-
-        .feature-box2 {
-            background-color: #fff;
-            padding: 20px;
-            margin-bottom: 20px;
-            border-radius: 8px;
-            width: 250px;
-            text-align: center;
-
-        }
-
-        .left-features,
-        .right-features {
-            display: flex;
-            flex-direction: column;
-            position: relative;
-            z-index: 2;
-        }
-
-        .left-features {
-            margin-right: 130px;
-        }
-
-        .right-features {
-            margin-left: 150px;
-        }
-
-        .center-phone {
-            max-width: 300px;
-            z-index: 1;
-        }
-
-        /* Call logs section */
-        .content-container {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            flex-wrap: nowrap;
-            gap: 30px;
-            margin: 50px 0;
-        }
-
-        .image-container {
-            flex: 1;
-            position: relative;
-            max-width: 600px;
-        }
-
-        .background-image {
-            width: 100%;
-            height: auto;
-            border-radius: 12px;
-            margin-top: 45px;
-        }
-
-        .text-with-border {
-            position: absolute;
-            top: 10%;
-            left: 10%;
-            background: #fff;
-            padding: 10px 20px;
-            border-radius: 10px;
-            max-width: 85%;
-            text-align: center;
-            font-size: 20px;
-            font-weight: 400;
-            color: black;
-            z-index: 20;
-        }
-
-        .overlay-image {
-            position: absolute;
-            top: 12%;
-            left: 10%;
-            width: 0%;
-            height: auto;
-            z-index: 20;
-            background-color: white;
-            padding: 25px;
-            border-radius: 10px;
-            margin-left: 450px;
-            width: 660px;
-        }
-
-        .text-with-border {
-            margin-left: 440px;
-            white-space: nowrap;
-            width: 790px;
-            padding: 15px;
-            margin-top: 30px;
-
-        }
-
-        .box-container {
-            flex: 1;
-            max-width: 700px;
-        }
-
-        .box {
-            /* background-color: #f0f0f0; */
-            background-color: #FBF8F7;
-            /* background-color: Red; */
-            padding: 30px;
-            border-radius: 20px;
-            height: 400px;
-            width: 135% !important;
-            margin-left: -230px !important;
-
-        }
-
-        /* Animation for scroll reveal */
-        .reveal-on-scroll {
-            opacity: 0;
-            transform: translateY(50px);
-            transition: all 0.6s ease-out;
-        }
-
-        .reveal-on-scroll.visible {
-            opacity: 1;
-            transform: translateY(0);
-        }
-
-        html {
-            scroll-behavior: smooth;
-        }
-
-
-        /* .box {
-            width: 550px;
-            height: 550px;
-            margin-left: -390px;
-        } */
-
-        .image-container {
-            position: relative;
-            z-index: 2;
-            /* Image stays in front */
-        }
-
-        .box-container {
-            position: relative;
-            z-index: 1;
-
-            /* Box stays behind */
-        }
-
-        .box {
-            width: 1250 !important;
-            height: 600px;
-            margin-left: -900px;
-        }
-
-        .background-image {
-            width: 530px;
-            height: 530px;
-        }
-
-        /* RESPONSIVE MEDIA QUERIES */
-
-        /* Large devices (desktops, less than 1200px) */
-        @media (max-width: 1199.98px) {
-            .square {
-                width: 500px;
-                height: 400px;
-            }
-
-            .label {
-                font-size: 60px;
-            }
-
-            .feature-box-container {
-                padding: 15px;
-            }
-
-            .feature-box {
-                width: 220px;
-            }
-
-            .center-phone {
-                max-width: 250px;
-            }
-        }
-
-        /* Medium devices (tablets, less than 992px) */
-        @media (max-width: 991.98px) {
-            .square {
-                width: 400px;
-                height: 350px;
-            }
-
-            .label {
-                font-size: 50px;
-            }
-
-            .content-item {
-                padding-left: 0;
-                text-align: center;
-            }
-
-            .content-item ul {
-                display: inline-block;
-                text-align: left;
-            }
-
-            .feature-box-container {
-                flex-direction: column;
-                height: auto;
-                padding: 30px 15px;
-            }
-
-            .background-image {
-                width: 360px;
-                height: 360px;
-            }
-
-            .box {
-                width: 360px;
-                height: 650px;
-                margin-left: 10px;
-                margin-left: -10px;
-                /* margin-left: -350px; */
-            }
-
-            /* Default (desktop) positioning */
-            .left-features {
-                margin-left: 600px;
-            }
-
-            /* On small screens (phones), shift left-features a bit to the right */
-
-
-
-            .left-features,
-            .right-features {
-                width: 100%;
-                margin: 0;
-                align-items: center;
-            }
-
-            .center-phone {
-                order: -1;
-                margin-bottom: 30px;
-                max-width: 200px;
-            }
-
-            .content-container {
-                flex-direction: column;
-            }
-
-            .image-container,
-            .box-container {
-                max-width: 200%;
-
-            }
-
-            .box {
-                height: auto;
-                min-height: 300px;
-                margin-left: 10px;
-            }
-        }
-
-        /* Small devices (landscape phones, less than 768px) */
-        @media (max-width: 767.98px) {
-            .square {
-                width: 90%;
-                height: 300px;
-                margin: 0 auto 20px;
-            }
-
-            .label {
-                font-size: 40px;
-            }
-
-            .phone-mockup,
-            .phone-mockup-sec {
-                transform: translate(-50%, -50%) scale(1);
-            }
-
-            .content-item strong {
-                font-size: 22px;
-            }
-
-            .content-item li {
-                font-size: 0.95rem;
-            }
-
-            .feature-box {
-                width: 90%;
-                max-width: 280px;
-            }
-
-            .text-with-border {
-                position: static;
-                margin: 20px auto;
-                width: 90%;
-                max-width: none;
-                margin-left: -10px;
-                margin-left: 2px;
-            }
-
-            .overlay-image {
-                position: static;
-                width: 90%;
-                margin: 20px auto;
-                max-width: none;
-            }
-
-            .image-container {
-                display: flex;
-                flex-direction: column;
-                align-items: center;
-            }
-        }
-
-        /* Extra small devices (portrait phones, less than 576px) */
-        @media (max-width: 575.98px) {
-            body {
-                padding-top: 70px;
-            }
-
-            .navbar-brand img {
-                height: 50px;
-            }
-
-            .square {
-                height: 250px;
-            }
-
-            .label {
-                font-size: 32px;
-            }
-
-            .content-item {
-                margin-bottom: 30px;
-            }
-
-            .content-item strong {
-                font-size: 20px;
-            }
-
-            .feature-box {
-                padding: 10px;
-                margin-bottom: 15px;
-            }
-
-            .feature-box strong {
-                font-size: 16px;
-            }
-
-            .feature-box p {
-                font-size: 14px;
-                margin-bottom: 5px;
-            }
-
-            .text-with-border {
-                font-size: 16px;
-                padding: 8px 15px;
-            }
-
-            #cont2 h2 {
-                text-align: center;
-                margin-left: 0;
-            }
-        }
-
-
-
-
-
-
-
-        .content-container {
-            display: flex;
-            align-items: flex-start;
-            position: relative;
-        }
-
-        .left-features {
-            position: relative;
-            padding-right: 40px;
-        }
-
-        .feature-box {
-            position: relative;
-        }
-
-        .line-to-phone {
-            position: absolute;
-            top: 52%;
-            left: 247px;
-            /* distance from the left side of the feature box */
-            width: 165px;
-            /* length of the line toward the phone */
-            height: 2px;
-            transform: translateY(-50%);
-            border-top: 2px dotted #0096FF;
-            /* Dotted line */
-        }
-
-        /* Optional: Dot at the end of the line */
-        .line-to-phone::after {
-            content: "";
-            position: absolute;
-            top: 50%;
-            right: -8px;
-            /* adjust depending on image size */
-            transform: translateY(-50%);
-            width: 25px;
-            /* image width */
-            height: 25px;
-            /* image height */
-            background-image: url('assests/dot.png');
-            /* ✅ Replace with your image path */
-            background-size: cover;
-            background-repeat: no-repeat;
-        }
-
-
-
-
-
-
-        .right-features {
-            position: relative;
-            padding-left: 40px;
-            padding: 20px;
-
-        }
-
-        .feature-box2 {
-            position: relative;
-        }
-
-        .line-to-phone-right {
-            position: absolute;
-            top: 65%;
-            right: 250px;
-            /* distance from the right edge of feature box */
-            width: 150px;
-            height: 2px;
-            border-top: 2px dotted #0096FF;
-            transform: translateY(-50%);
-        }
-
-        /* Optional: Dot at the end of the right line */
-        .line-to-phone-right::after {
-            content: "";
-            position: absolute;
-            top: 60%;
-            right: 148px;
-            /* adjust depending on image size */
-            transform: translateY(-50%);
-            width: 25px;
-            /* image width */
-            height: 25px;
-            /* image height */
-            background-image: url('assests/dot.png');
-            /* ✅ Replace with your image path */
-            background-size: cover;
-            background-repeat: no-repeat;
-        }
-
-
-
-        /* Hide lines on screens smaller than 768px (phones/tablets) */
-        @media screen and (max-width: 767px) {
-
-            .line-to-phone,
-            .line-to-phone-right {
-                display: none !important;
-            }
-        }
-
-
-
-        @media screen and (max-width: 767px) {
-            .left-features {
-                margin-left: 70px;
-                align-items: flex-start;
-                /* optional: to align text properly */
-            }
-        }
-
-
-        @media screen and (max-width: 767px) {
-            .right-features {
-                margin-left: 40px;
-                align-items: flex-start;
-                /* optional: to align text properly */
-            }
-        }
-
-        .dropdown-menu {
-            display: none;
-        }
-
-        /* Show the dropdown when the 'show' class is added */
-        .dropdown-menu.show {
-            display: block;
-        }
-
-        .phone-wrapper {
-            position: relative;
-            display: inline-block;
-            margin-top: 600px;
-            /* Adjust this value as needed */
-        }
-
-        .phone-video {
-            position: absolute;
-            /* Adjust these values to match your phone mockup's screen area */
-            top: -80%;
-            margin-top: 80px;
-            /* Distance from top of phone to screen */
-            left: 0;
-            /* Distance from left edge to screen */
-            width: 98%;
-            /* Width of the actual screen area */
-            height: 125%;
-            /* Height of the actual screen area */
-            object-fit: cover;
-            border-radius: 25px;
-            /* Match the phone's screen corner radius */
-        }
-
-        .phone-mockup {
-            position: relative;
-            z-index: 2;
-            display: block;
-        }
-
-        .custom-container {
-            width: 100%;
-            max-width: 1400px;
-            /* or any desired width */
-            margin: 0 auto;
-            padding: 0 15px;
-            text-align: center;
-        }
-
-        .nav-item.dropdown:hover .dropdown-menu {
-            display: block;
-            margin-top: 0;
-            /* Ensure it's directly below */
-        }
-
-        /* Optional: visual enhancement */
-        .dropdown-menu {
-            top: 100%;
-            left: 0;
-            margin-top: 0;
-        }
-
-        @media (max-width: 768px) {
-            .flex-container {
-                flex-direction: column;
-                align-items: center;
-                position: static !important;
-                /* disable absolute positioning effects on parent */
-                margin-left: 0 !important;
-                width: 100% !important;
-            }
-
-            .arrow {
-                position: static !important;
-                /* cancel absolute */
-                margin: 10px 0 20px 0 !important;
-                /* space below first img */
-                order: 2;
-                /* come right after img1 */
-                width: 20px !important;
-                height: 20px !important;
-            }
-
-            .img1 {
-                order: 1;
-                width: 80px !important;
-                height: auto !important;
-                margin: 0 auto !important;
-            }
-
-            .spacer {
-                display: none;
-                /* no spacer in column layout */
-            }
-
-            .img3 {
-                order: 3;
-                width: 90% !important;
-                max-width: 380px;
-                margin: 0 auto !important;
-            }
-        }
-
-        @media (max-width: 768px) {
-            .flex-container {
-                flex-direction: column;
-                align-items: center;
-                position: static !important;
-                /* disable absolute positioning effects on parent */
-                margin-left: 20px !important;
-                width: 100% !important;
-            }
-
-            .arrow {
-                display: none;
-            }
-
-            .img1 {
-                order: 1;
-                width: 80px !important;
-                height: auto !important;
-                margin: 0 auto !important;
-            }
-
-            .spacer {
-                display: none;
-                /* no spacer in column layout */
-            }
-
-            .img3 {
-                order: 3;
-                width: 90% !important;
-                max-width: 380px;
-                margin: 0 auto !important;
-            }
-        }
-
-
-
-        .flex-container {
-            display: flex;
-            align-items: center;
-            position: relative;
-            width: 100%;
-            margin-top: 50px;
-        }
-
-        .img1 {
-            width: 300px;
-            height: auto;
-            border-radius: 10px;
-            margin-left: 60px;
-        }
-
-        .spacer {
-            flex: 1;
-        }
-
-        .arrow {
-            width: 40px;
-            height: 60px;
-            border-radius: 10px;
-            margin-right: 30px;
-            margin-top: -60px;
-        }
-
-        .img3 {
-            width: 950px;
-            height: auto;
-            border-radius: 10px;
-            margin-right: -150px;
-        }
-
-
-
-
-        @media (max-width: 600px) {
-            #cont2 h2 {
-                margin-left: 0 !important;
-                font-size: 18px;
-                /* smaller font for phone */
-                text-align: left;
-            }
-
-            #cont2 img {
-                width: 100% !important;
-                max-width: 100% !important;
-                height: auto !important;
-                margin-left: 0 !important;
-                margin-top: 10px !important;
-            }
-        }
-    </style>
 </head>
 
 <body>
@@ -911,24 +40,26 @@
                                 <li><a class="dropdown-item" href="#features-section">Powerful Features at your
                                         Fingertips</a>
                                 </li>
-                                <li><a class="dropdown-item" href="#key-statistics">Key Statistics: Results From
+                                <li><a class="dropdown-item" href="#cont2">Call logs & WhatsApp chat insights
+                                        at a glance
+                                    </a>
+                                </li>
+                                <li><a class="dropdown-item" href="#effort">Effortless Follow-ups & Voice
+                                        powered actions
+
+                                    </a>
+                                </li>
+                                <li><a class="dropdown-item" href="#seamless">Seamless communication with your
+                                        CRM software
+
+
+                                    </a>
+                                </li>
+
+                                <li><a class="dropdown-item" href="#key-statistics">Key Statistics : Results
                                         Using Smart Assist</a></li>
                             </ul>
                         </li>
-                        <!-- <li class="nav-item dropdown hover-dropdown">
-                        <li class="nav-item dropdown d-flex align-items-center">
-                            <a class="nav-link" href="nexi.html">Nexi</a>
-
-                            <a class="nav-link dropdown-toggle ps-1" href="#" id="nexiDropdown" role="button"
-                                data-bs-toggle="dropdown" aria-expanded="false"></a>
-
-                            <ul class="dropdown-menu" aria-labelledby="nexiDropdown">
-                                <li><a class="dropdown-item" href="nexi.html">About Nexi</a></li>
-                                <li><a class="dropdown-item" href="#key-statistics">Challenges</a></li>
-                                <li><a class="dropdown-item" href="#key-statistics">Impact</a></li>
-                                <li><a class="dropdown-item" href="#key-statistics">AI Technologies Behind NEXI</a></li>
-                            </ul>
-                        </li>  -->
 
 
                     </div>
@@ -966,222 +97,234 @@
             <!-- First Content Item -->
             <div class="col-lg-4 col-md-4 col-12 mb-4 reveal-on-scroll">
                 <div class="content-item">
-                    <strong style="margin-left: 20px;">What is Smart Assist?</strong>
+                    <strong class="title">What is Smart Assist?</strong>
                     <ul>
                         <li>User centric sales assist app</li>
-                        <li>Designed to streamline and enhance sales <span style="margin-left:22px;">operations</span>
-                        </li>
+                        <li>Designed to streamline and enhance sales <span class="nested-indent">operations</span></li>
                     </ul>
                 </div>
             </div>
+
 
             <!-- Second Content Item -->
             <div class="col-lg-4 col-md-4 col-12 mb-4 reveal-on-scroll">
                 <div class="content-item">
-                    <strong style="margin-left:20px;">How it is Different?</strong>
+                    <strong class="diff-title">How it is Different?</strong>
                     <ul>
                         <li>Extremely easy to use, no training required</li>
                         <li>Key functions accessible with just two clicks</li>
-                        <li>Comprehensive features: lead management, follow-<span
-                                style="margin-left:22px;white-space: nowrap;">up
-                                scheduling, appointment
-                                management,<br>
-                                <span style="margin-left:22px;">performance analytics</span></span></li>
-                        <li>Intuitive interface that keeps salespeople engaged
-                            <span style="margin-left:22px;">and effective</span>
+                        <li>
+                            Comprehensive features: lead management, follow-
+                            <span class="diff-indent nowrap-text">up scheduling, appointment management,<br>
+                                <span class="diff-indent">performance analytics</span>
+                            </span>
+                        </li>
+                        <li>
+                            Intuitive interface that keeps salespeople engaged
+                            <span class="diff-indent">and effective</span>
                         </li>
                     </ul>
                 </div>
             </div>
 
+
             <!-- Third Content Item -->
             <div class="col-lg-4 col-md-4 col-12 mb-4 reveal-on-scroll">
                 <div class="content-item">
-                    <strong style="margin-left:20px;">Why it was Made?</strong>
+                    <strong class="reason-title">Why it was Made?</strong>
                     <ul>
                         <li>Simplifies the lives of sales professionals</li>
-                        <li>Ensures consistebt use over traditional methods</li>
-                        <li>Aims to make sales processes more efficient and <span
-                                style="margin-left:20px;">productive</span></li>
+                        <li>Ensures consistent use over traditional methods</li>
+                        <li>
+                            Aims to make sales processes more efficient and
+                            <span class="reason-indent">productive</span>
+                        </li>
                     </ul>
                 </div>
             </div>
-        </div>
-    </div>
 
-    <!-- Features Section -->
-    <div class="container reveal-on-scroll">
-        <h2 id="features-section" class="text-left mb-4" style="color:#242E51;font-weight:500px">Powerful Features at
-            Your Fingertips</h2>
+            <!-- Features Section -->
+            <div class="container reveal-on-scroll">
+                <h2 id="features-section" class="text-left mb-4" style="color:#242E51;font-weight:500px">Powerful
+                    Features at
+                    Your Fingertips</h2>
 
-        <div class="feature-box-container reveal-on-scroll" style="margin-top:190px;">
-            <!-- Left Column Features -->
-            <div class="left-features d-flex flex-column position-relative">
-                <div class="feature-box mb-4" style="margin-top:28px;padding:10px;">
-                    <strong style="color:#0C0C0D;">Unified Lead Management</strong>
-                    <p style="font-weight: 100;">Reduces manual data entry</p>
-                    <div class="line-to-phone line-1"></div>
-                </div>
-                <div class="feature-box mb-4">
-                    <strong style="color:#0C0C0D">Auto-Assisted Follow-ups</strong>
-                    <p style="font-weight: 100;">Automated reminders for timely follow-ups</p>
-                    <div class="line-to-phone line-2"></div>
-                </div>
-                <div class="feature-box mb-4">
-                    <strong style="color:#0C0C0D">On-the-Go Test Drive Planner</strong>
-                    <p style="font-weight: 100;">Reduces manual data entry</p>
-                    <div class="line-to-phone line-3"></div>
-                </div>
-                <div class="feature-box mb-4" style="bottom:10px;">
-                    <strong style="color:#0C0C0D">Smart Data Insights</strong>
-                    <p style="font-weight: 100;">Goal tracking and perfomance analytics</p>
-                    <div class="line-to-phone line-4"></div>
-                </div>
-            </div>
+                <div class="feature-box-container reveal-on-scroll" style="margin-top:190px;">
+                    <!-- Left Column Features -->
+                    <div class="left-features d-flex flex-column position-relative">
+                        <div class="feature-box mb-4" style="margin-top:28px;padding:10px;">
+                            <strong style="color:#0C0C0D;">Unified Lead Management</strong>
+                            <p style="font-weight: 100;">Reduces manual data entry</p>
+                            <div class="line-to-phone line-1"></div>
+                        </div>
+                        <div class="feature-box mb-4">
+                            <strong style="color:#0C0C0D">Auto-Assisted Follow-ups</strong>
+                            <p style="font-weight: 100;">Automated reminders for timely follow-ups</p>
+                            <div class="line-to-phone line-2"></div>
+                        </div>
+                        <div class="feature-box mb-4">
+                            <strong style="color:#0C0C0D">On-the-Go Test Drive Planner</strong>
+                            <p style="font-weight: 100;">Reduces manual data entry</p>
+                            <div class="line-to-phone line-3"></div>
+                        </div>
+                        <div class="feature-box mb-4" style="bottom:10px;">
+                            <strong style="color:#0C0C0D">Smart Data Insights</strong>
+                            <p style="font-weight: 100;">Goal tracking and perfomance analytics</p>
+                            <div class="line-to-phone line-4"></div>
+                        </div>
+                    </div>
 
-            <!-- Center Phone Image -->
-            <div class="phone-wrapper">
-                <img src="assests/iPhone 15 Pro - Mockup.png" alt="Phone Mockup" class="phone-mockup">
-                <video class="phone-video" autoplay muted loop>
-                    <source src="assests/WhatsApp Video 2025-05-23 at 10.42.17.mp4" type="video/mp4">
-                    Your browser does not support the video tag.
-                </video>
-            </div>
+                    <!-- Center Phone Image -->
+                    <div class="phone-wrapper">
+                        <img src="assests/iPhone 15 Pro - Mockup.png" alt="Phone Mockup" class="phone-mockup"
+                            id="iphone15">
+                        <video class="phone-video" autoplay muted loop>
+                            <source src="assests/WhatsApp Video 2025-05-23 at 10.42.17.mp4" type="video/mp4">
+                            Your browser does not support the video tag.
+                        </video>
+                    </div>
 
-            <!-- Right Column Features -->
-            <div class="right-features d-flex flex-column position-relative">
-                <div class="feature-box2 mb-4" style="height:90px;margin-top:18px;padding:20px;">
-                    <strong style="color:#0C0C0D;white-space: nowrap;">Automated Task Management</strong>
-                    <p style="font-weight: 100;">Reduces manual data entry</p>
-                    <div class="line-to-phone-right line-r1"></div>
-                </div>
-                <div class="feature-box2 mb-4" style="height:100px;">
-                    <strong style="color:#0C0C0D">Integrated Communication</strong>
-                    <p style="font-weight: 100;">Centralizes lead Communication</p>
-                    <div class="line-to-phone-right line-r2"></div>
-                </div>
-                <div class="feature-box2 mb-4">
-                    <strong style="color:#0C0C0D">Performance Monitoring</strong>
-                    <p style="font-weight: 100;">Detailed progress analytics</p>
-                    <div class="line-to-phone-right line-r3"></div>
-                </div>
-                <div class="feature-box2 mb-4" style="height:120px;">
-                    <strong style="color:#0C0C0D;">Adaptive Integration Engine</strong>
-                    <p style="font-weight: 100;white-space: nowrap;">Seamless Integration with existing<br>
-                        systems</p>
-                    <div class="line-to-phone-right line-r4"></div>
-                </div>
-            </div>
+                    <!-- Right Column Features -->
+                    <div class="right-features d-flex flex-column position-relative">
+                        <div class="feature-box2 mb-4" style="height:90px;margin-top:18px;padding:20px;">
+                            <strong style="color:#0C0C0D;white-space: nowrap;">Automated Task Management</strong>
+                            <p style="font-weight: 100;">Reduces manual data entry</p>
+                            <div class="line-to-phone-right line-r1"></div>
+                        </div>
+                        <div class="feature-box2 mb-4" style="height:100px;">
+                            <strong style="color:#0C0C0D">Integrated Communication</strong>
+                            <p style="font-weight: 100;">Centralizes lead Communication</p>
+                            <div class="line-to-phone-right line-r2"></div>
+                        </div>
+                        <div class="feature-box2 mb-4">
+                            <strong style="color:#0C0C0D">Performance Monitoring</strong>
+                            <p style="font-weight: 100;">Detailed progress analytics</p>
+                            <div class="line-to-phone-right line-r3"></div>
+                        </div>
+                        <div class="feature-box2 mb-4" style="height:120px;">
+                            <strong style="color:#0C0C0D;">Adaptive Integration Engine</strong>
+                            <p style="font-weight: 100;white-space: nowrap;">Seamless Integration with existing<br>
+                                systems</p>
+                            <div class="line-to-phone-right line-r4"></div>
+                        </div>
+                    </div>
 
 
-            <!-- Mobile-only center phone -->
-            <!-- <img src="assests/Group 289527.png" alt="Phone Mockup" class="center-phone d-block d-md-none"
+                    <!-- Mobile-only center phone -->
+                    <!-- <img src="assests/Group 289527.png" alt="Phone Mockup" class="center-phone d-block d-md-none"
                 style="margin: 20px auto;"> -->
-        </div>
-    </div>
-    <!-- CALL LOGS AT  WP GLANCE -->
-    <div class="custom-container reveal-on-scroll" id="cont2" style="margin-top: 200px;">
-        <h2 style="margin-top: 20px;margin-left:-700px;color:#242E51;font-weight:500px">Call logs & WhatsApp chat
-            insights at a glance</span>
-        </h2>
-        <img src="assests/Mask group (1).png" alt="Call logs and WhatsApp insights"
-            style="width: 120%; max-width: 1400px !important; height: 200 !important;; margin-top: -20px;margin-left:0px;">
-    </div>
-
-    <!-- EFFORTSLESS  ACTIONS -->
-    <div class="container reveal-on-scroll" id="cont2" style="margin-top:200px;">
-        <h2 style="margin-top:20px;color:#242E51;font-weight:500px">
-            Effortless Follow-ups & Voice powered actions
-        </h2>
-
-        <img src="assests/Group 289706.png" alt="Call logs and WhatsApp insights"
-            style="width: 100%; max-width: 900px; height: auto; display: block; margin: 20px auto;margin-left:250px;">
-    </div>
-
-
-    <!-- Seamless communication -->
-    <div class="container reveal-on-scroll" id="cont2" style="margin-top:-80px;">
-        <h2 style="margin-top:20px; text-align: left;color:#242E51;font-weight:500px">
-            Seamless communication with your CRM software </h2>
-
-        <!-- Flex container for the three images -->
-        <div style="width: 100%; margin-top: 50px; margin-left: -20px; position: relative;">
-            <!-- Images container -->
-            <div class="flex-container"
-                style="display: flex; align-items: center; justify-content: center;margin-left:-40px;">
-                <!-- First image -->
-                <img src="assests/Group 289704.png" alt="Image 1" class="img1" />
-
-                <!-- Spacer -->
-                <div class="spacer" style="width: 80px;"></div>
-
-                <!-- Third image -->
-                <img src="assests/Device - Macbook Air (1).png" alt="Image 3" class="img3" />
+                </div>
             </div>
-
-            <!-- Arrow positioned absolutely between the images -->
-            <div class="arrow-container"
-                style="position: absolute; top: 50%; left: 35%; transform: translate(-50%, -50%);">
-                <img src="assests/Vector (5).png" alt="Arrow" class="arrow" />
-            </div>
-        </div>
-
-
-
-
-
-
-
-        <!-- Call Logs Section -->
-        <div class="container " id="key-statistics" style="margin-top:50px;">
-            <h2 style="margin-top:20px;color:#242E51;font-weight:500px">Key Statistics: Results Using Smart Assist</h2>
-            <div class="content-container ">
-                <!-- Left side with image -->
-                <div class="image-container ">
-                    <!-- Background main image -->
-                    <img class="background-image "
-                        src="assests/Free iPhone mockup on multicolored background (Mockuuups Studio) (1).png"
-                        alt="Call Logs Image" />
-
-                    <!-- Positioned text -->
-                    <!-- <div id="key-statistics" class="text-with-border"></div> -->
-
-                    <!-- Positioned image below text -->
-                    <img class="overlay-image" src="assests/Group 34002 (3).png" alt="Key Statistics Image" />
+            <!-- CALL LOGS AT  WP GLANCE -->
+            <div class="custom-container reveal-on-scroll" id="cont2" style="margin-top: 200px;">
+                <h2 style="margin-top: 20px;margin-left:-700px;color:#242E51;font-weight:500px">Call logs & WhatsApp
+                    chat
+                    insights at a glance</span>
+                </h2>
+                <div class="mask">
+                    <img src="assests/Mask group (1).png" alt="Call logs and WhatsApp insights"
+                        style="width: 120%; max-width: 1400px !important; height: 200 !important;; margin-top: -20px;margin-left:0px;">
                 </div>
 
-                <!-- Right side with box -->
-                <div class="box-container ">
-                    <div class="box">
-                        <!-- box content -->
+            </div>
+
+            <!-- EFFORTSLESS  ACTIONS -->
+            <div class="container reveal-on-scroll " id="effort" style="margin-top:200px;">
+                <h2 style="margin-top:20px;color:#242E51;font-weight:500px">
+                    Effortless Follow-ups & Voice powered actions
+                </h2>
+                <div class="group">
+                    <img src="assests/Group 289706.png" alt="Call logs and WhatsApp insights"
+                        style="width: 100%; max-width: 900px; height: auto; display: block; margin: 20px auto;margin-left:250px;">
+                </div>
+
+            </div>
+
+
+            <!-- Seamless communication -->
+            <div class="container reveal-on-scroll " id="seamless" style="margin-top:-80px;">
+                <h2 style="margin-top:20px; text-align: left;color:#242E51;font-weight:500px">
+                    Seamless communication with your CRM software </h2>
+
+                <!-- Flex container for the three images -->
+                <div style="width: 100%; margin-top: 50px; margin-left: -20px; position: relative;">
+                    <!-- Images container -->
+                    <div class="flex-container"
+                        style="display: flex; align-items: center; justify-content: center;margin-left:-40px;">
+                        <!-- First image -->
+                        <img src="assests/Group 289704.png" alt="Image 1" class="img1" />
+
+                        <!-- Spacer -->
+                        <div class="spacer" style="width: 80px;"></div>
+
+                        <!-- Third image -->
+                        <img src="assests/Device - Macbook Air (1).png" alt="Image 3" class="img3" />
+                    </div>
+
+                    <!-- Arrow positioned absolutely between the images -->
+                    <div class="arrow-container"
+                        style="position: absolute; top: 50%; left: 35%; transform: translate(-50%, -50%);">
+                        <img src="assests/Vector (5).png" alt="Arrow" class="arrow" />
                     </div>
                 </div>
-            </div>
-        </div>
 
 
-        <script>
-            // Animation script for reveal on scroll
-            const observer = new IntersectionObserver(entries => {
-                entries.forEach(entry => {
-                    if (entry.isIntersecting) {
-                        entry.target.classList.add('visible');
-                        observer.unobserve(entry.target); // Trigger only once
-                    }
-                });
-            }, {
-                threshold: 0.15,
-                rootMargin: '0px 0px -50px 0px'
-            });
 
-            document.querySelectorAll('.reveal-on-scroll').forEach(el => {
-                observer.observe(el);
-            });
-        </script>
 
-        <!-- Bootstrap 5 JS and Popper.js -->
-        <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.10.2/dist/umd/popper.min.js"></script>
-        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.min.js"></script>
+
+
+
+                <!-- Call Logs Section -->
+                <div class="container " id="key-statistics" style="margin-top:50px;">
+                    <h2 style="margin-top:20px;color:#242E51;font-weight:500px">Key Statistics : Results Using Smart
+                        Assist</h2>
+                    <div class="content-container ">
+                        <!-- Left side with image -->
+                        <div class="image-container ">
+                            <!-- Background main image -->
+                            <img class="background-image "
+                                src="assests/Free iPhone mockup on multicolored background (Mockuuups Studio) (1).png"
+                                alt="Call Logs Image" />
+
+                            <!-- Positioned text -->
+                            <!-- <div id="key-statistics" class="text-with-border"></div> -->
+
+                            <!-- Positioned image below text -->
+                            <img class="overlay-image" src="assests/Group 34002 (3).png" alt="Key Statistics Image" />
+                        </div>
+
+                        <!-- Right side with box -->
+                        <div class="box-container ">
+                            <div class="box">
+                                <!-- box content -->
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+
+                <script>
+                    // Animation script for reveal on scroll
+                    const observer = new IntersectionObserver(entries => {
+                        entries.forEach(entry => {
+                            if (entry.isIntersecting) {
+                                entry.target.classList.add('visible');
+                                observer.unobserve(entry.target); // Trigger only once
+                            }
+                        });
+                    }, {
+                        threshold: 0.15,
+                        rootMargin: '0px 0px -50px 0px'
+                    });
+
+                    document.querySelectorAll('.reveal-on-scroll').forEach(el => {
+                        observer.observe(el);
+                    });
+                </script>
+
+                <!-- Bootstrap 5 JS and Popper.js -->
+                <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.10.2/dist/umd/popper.min.js"></script>
+                <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.min.js"></script>
 </body>
 
 </html>

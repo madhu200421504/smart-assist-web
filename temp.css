@@ -1,0 +1,7 @@
+.container {
+  width: 90%; /* fluid width */
+  max-width: 1200px; /* max width on large screens */
+  margin: 0 auto; /* center horizontally */
+  padding: 20px 15px; /* default padding */
+  box-sizing: border-box;
+}
