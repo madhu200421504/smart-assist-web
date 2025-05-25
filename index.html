@@ -750,38 +750,82 @@
             margin-top: 0;
         }
 
+        @media (max-width: 768px) {
+            .flex-container {
+                flex-direction: column;
+                align-items: center;
+                position: static !important;
+                /* disable absolute positioning effects on parent */
+                margin-left: 0 !important;
+                width: 100% !important;
+            }
+
+            .arrow {
+                position: static !important;
+                /* cancel absolute */
+                margin: 10px 0 20px 0 !important;
+                /* space below first img */
+                order: 2;
+                /* come right after img1 */
+                width: 20px !important;
+                height: 20px !important;
+            }
+
+            .img1 {
+                order: 1;
+                width: 80px !important;
+                height: auto !important;
+                margin: 0 auto !important;
+            }
+
+            .spacer {
+                display: none;
+                /* no spacer in column layout */
+            }
+
+            .img3 {
+                order: 3;
+                width: 90% !important;
+                max-width: 380px;
+                margin: 0 auto !important;
+            }
+        }
 
         @media (max-width: 768px) {
             .flex-container {
                 flex-direction: column;
                 align-items: center;
-            }
-
-            .img1,
-            .arrow,
-            .img3 {
-                margin: 10px 0 !important;
-            }
-
-            .img1 {
-                width: 90%;
-                margin-left: 0 !important;
+                position: static !important;
+                /* disable absolute positioning effects on parent */
+                margin-left: 20px !important;
+                width: 100% !important;
             }
 
             .arrow {
-                width: 20px !important;
-                height: 20px !important;
-                margin-top: 0 !important;
-                margin-right: 0 !important;
+                display: none;
+            }
 
+            .img1 {
+                order: 1;
+                width: 80px !important;
+                height: auto !important;
+                margin: 0 auto !important;
+            }
+
+            .spacer {
+                display: none;
+                /* no spacer in column layout */
             }
 
             .img3 {
-                width: 380px !important;
-                margin-right: 0 !important;
-                margin-left: -10px !important;
+                order: 3;
+                width: 90% !important;
+                max-width: 380px;
+                margin: 0 auto !important;
             }
         }
+
+
 
         .flex-container {
             display: flex;
